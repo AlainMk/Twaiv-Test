@@ -4,8 +4,8 @@ import 'package:twaiv_test/data/model/fruit.dart';
 import 'package:twaiv_test/theme/border_radius.dart';
 import 'package:twaiv_test/theme/spacing.dart';
 
-class BottomCartsBar extends StatelessWidget {
-  const BottomCartsBar({
+class BottomBasketsBar extends StatelessWidget {
+  const BottomBasketsBar({
     super.key,
   });
 

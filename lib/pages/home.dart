@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twaiv_test/data/api/fake_data.dart';
+import 'package:twaiv_test/data/api/tray/fake_data.dart';
 import 'package:twaiv_test/data/model/tray.dart';
-import 'package:twaiv_test/pages/bottom_cart.dart';
+import 'package:twaiv_test/pages/bottom_basket.dart';
 import 'package:twaiv_test/pages/tray_item.dart';
 import 'package:twaiv_test/theme/spacing.dart';
 import 'package:twaiv_test/widgets/app_bar.dart';
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                     return const SizedBox(height: TwaivSpacing.large);
                   },
                 ),
-                const BottomCartsBar()
+                const BottomBasketsBar()
               ],
             ),
           ),
