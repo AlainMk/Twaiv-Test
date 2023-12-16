@@ -7,16 +7,18 @@ class TwaivTheme {
   /// Light default theme color scheme
   static ThemeData light() {
     return ThemeData(
-      colorScheme: const ColorScheme.light(
+      colorScheme: const ColorScheme.light().copyWith(
         primary: TwaivColors.primary,
         secondary: TwaivColors.secondary,
         error: TwaivColors.red,
       ),
+      primaryColor: TwaivColors.primary,
       appBarTheme: const AppBarTheme(
         backgroundColor: TwaivColors.white,
         elevation: 0,
       ),
       textTheme: TexFonts.textTheme,
+      useMaterial3: false,
     );
   }
 }

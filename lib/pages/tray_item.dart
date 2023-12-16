@@ -34,15 +34,32 @@ class TrayItem extends StatelessWidget {
               Image.asset(
                 TwaivImages.badgeIcon,
                 width: 24,
+                color: Theme.of(context).primaryColor,
               ),
               const SizedBox(width: TwaivSpacing.small),
-              Text(
-                tray.name,
-                style: Theme.of(context).textTheme.titleMedium,
+              Expanded(
+                child: Text(
+                  tray.name,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
+              Container(
+                height: 32,
+                width: 32,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(TwaivBorderRadius.normal),
+                ),
+                child: const Icon(Icons.arrow_forward),
+              )
             ],
           ),
-          const SizedBox(height: TwaivSpacing.large),
+          const SizedBox(height: TwaivSpacing.none),
+          Text(
+            'Everything for you to stay healthy',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: TwaivSpacing.largeL),
           _contentFruitsList(),
         ],
       ),
@@ -57,6 +74,7 @@ class TrayItem extends StatelessWidget {
         mainAxisSpacing: TwaivSpacing.medium,
         childAspectRatio: 1,
       ),
+      padding: EdgeInsets.zero,
       shrinkWrap: true,
       physics: const ScrollPhysics(),
       itemBuilder: (context, index) {

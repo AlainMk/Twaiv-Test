@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class TwaivColors {
   const TwaivColors._();
-  static const primary = Color(0xFF1e51d1);
-  static const secondary = Color(0xFF1e51d1);
+  static const primary = Color(0xFF63BA01);
+  static const secondary = Color(0xFF63BA01);
 
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0xFFFEFEFE);
