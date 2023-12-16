@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twaiv_test/data/api/fake_data.dart';
 import 'package:twaiv_test/data/model/tray.dart';
+import 'package:twaiv_test/pages/bottom_cart.dart';
 import 'package:twaiv_test/pages/tray_item.dart';
 import 'package:twaiv_test/theme/spacing.dart';
 import 'package:twaiv_test/widgets/app_bar.dart';
@@ -19,15 +20,21 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: TwaivSpacing.small),
           const SearchBox(),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: TwaivSpacing.large),
-              itemBuilder: (context, index) {
-                return TrayItem(tray: trays[index]);
-              },
-              itemCount: trays.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: TwaivSpacing.large);
-              },
+            child: Stack(
+              children: [
+                ListView.separated(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: TwaivSpacing.large),
+                  itemBuilder: (context, index) {
+                    return TrayItem(tray: trays[index]);
+                  },
+                  itemCount: trays.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: TwaivSpacing.large);
+                  },
+                ),
+                const BottomCartsBar()
+              ],
             ),
           ),
         ],
