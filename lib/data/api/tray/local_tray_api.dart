@@ -37,7 +37,12 @@ class LocalTrayApi extends TrayApi {
   Future<void> addFruit(String trayId, Fruit fruit) {
     final trays = [..._controller.value];
     final trayIndex = trays.indexWhere((t) => t.name == trayId);
-    trays[trayIndex].fruits.add(fruit);
+
+    final fruitExist = trays[trayIndex].fruits.where((f) => f.id == fruit.id);
+
+    if (fruitExist.isEmpty) {
+      trays[trayIndex].fruits.add(fruit);
+    }
     _controller.add(trays);
     return _setValue(_trayCollectionKey, jsonEncode(trays));
   }

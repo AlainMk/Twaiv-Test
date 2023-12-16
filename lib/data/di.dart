@@ -4,6 +4,7 @@ import 'package:twaiv_test/data/api/basket/basket_api.dart';
 import 'package:twaiv_test/data/api/basket/local_basket_api.dart';
 import 'package:twaiv_test/data/api/tray/local_tray_api.dart';
 import 'package:twaiv_test/data/api/tray/tray_api.dart';
+import 'package:twaiv_test/data/repository/basket_repository.dart';
 import 'package:twaiv_test/data/repository/tray_repository.dart';
 
 class DependencyInjector {
@@ -16,5 +17,6 @@ class DependencyInjector {
 
     // Repositories
     GetIt.instance.registerSingleton<TrayRepository>(TrayRepository());
+    GetIt.instance.registerSingleton<BasketRepository>(BasketRepository());
   }
 }

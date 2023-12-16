@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twaiv_test/data/api/basket/fake_data.dart';
+import 'package:twaiv_test/data/model/basket.dart';
 import 'package:twaiv_test/data/model/fruit.dart';
 import 'package:twaiv_test/theme/border_radius.dart';
 import 'package:twaiv_test/theme/spacing.dart';
@@ -43,7 +45,8 @@ class BottomBasketsBar extends StatelessWidget {
             const SizedBox(height: TwaivSpacing.normal),
             Row(
               children: [
-                for (var i = 0; i < 3; i++) _buildItemCart(i, context),
+                for (var i = 0; i < fakeBaskets.length; i++)
+                  _buildItemCart(i, context),
               ],
             ),
             const SizedBox(height: TwaivSpacing.large),
@@ -54,6 +57,7 @@ class BottomBasketsBar extends StatelessWidget {
   }
 
   Widget _buildItemCart(int i, BuildContext context) {
+    final baskets = Basket.fromJsonList(fakeBaskets);
     return Expanded(
       child: DragTarget<Fruit>(
         onAccept: (fruit) {
@@ -73,7 +77,7 @@ class BottomBasketsBar extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Basket One',
+                  baskets[i].name,
                   style: Theme.of(context)
                       .textTheme
                       .titleSmall!
@@ -84,7 +88,7 @@ class BottomBasketsBar extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Badge(
                     label: Text(
-                      '0',
+                      '${baskets[i].fruits.length}',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
