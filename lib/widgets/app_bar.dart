@@ -1,5 +1,6 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:twaiv_test/theme/spacing.dart';
 
 /// [AppBarHeader] is a widget that displays the header of the home screen.
@@ -38,14 +39,14 @@ class AppBarHeader extends StatelessWidget {
           ),
         ),
         Badge(
-          label: Text(
+          badgeContent: Text(
             '2',
             style: Theme.of(context)
                 .textTheme
                 .bodySmall!
                 .copyWith(color: Colors.white),
           ),
-          offset: const Offset(5, -4),
+          position: BadgePosition.topEnd(end: -6),
           child: Icon(
             CupertinoIcons.bell,
             color: Theme.of(context).textTheme.titleMedium!.color,

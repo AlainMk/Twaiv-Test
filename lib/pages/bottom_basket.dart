@@ -1,8 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:twaiv_test/data/api/basket/fake_data.dart';
+import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twaiv_test/data/model/DnDRaw.dart';
-import 'package:twaiv_test/data/model/basket.dart';
+import 'package:twaiv_test/pages/blocs/basket/baskets_bloc.dart';
+import 'package:twaiv_test/pages/blocs/trays/trays_bloc.dart';
 import 'package:twaiv_test/theme/border_radius.dart';
 import 'package:twaiv_test/theme/spacing.dart';
 
@@ -43,11 +45,15 @@ class BottomBasketsBar extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: TwaivSpacing.normal),
-            Row(
-              children: [
-                for (var i = 0; i < fakeBaskets.length; i++)
-                  _buildItemCart(i, context),
-              ],
+            BlocBuilder<BasketsBloc, BasketsState>(
+              builder: (context, state) {
+                return Row(
+                  children: [
+                    for (var i = 0; i < state.baskets.length; i++)
+                      _buildItemCart(i, context),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: TwaivSpacing.large),
           ],
@@ -57,50 +63,65 @@ class BottomBasketsBar extends StatelessWidget {
   }
 
   Widget _buildItemCart(int i, BuildContext context) {
-    final baskets = Basket.fromJsonList(fakeBaskets);
     return Expanded(
-      child: DragTarget<DnDRaw>(
-        onAccept: (raw) {
-          debugPrint('receive fruit ${raw.fruit.name}');
-        },
-        builder: (BuildContext context, List<DnDRaw?> candidateData,
-            List<dynamic> rejectedData) {
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: TwaivSpacing.medium),
-            margin: EdgeInsets.only(
-              right: i != 2 ? TwaivSpacing.medium : TwaivSpacing.zero,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(TwaivBorderRadius.big),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  baskets[i].name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontSize: 12),
+      child: BlocBuilder<BasketsBloc, BasketsState>(
+        builder: (context, state) {
+          final baskets = state.baskets;
+          return DragTarget<DnDRaw>(
+            onAccept: (raw) {
+              final fruit = raw.fruit;
+              final fromTray = raw.tray;
+
+              context
+                  .read<TraysBloc>()
+                  .add(RemoveFruit(trayId: fromTray.name, fruitId: fruit.id));
+              context
+                  .read<BasketsBloc>()
+                  .add(AddFruitToBasket(fruit: fruit, basketId: baskets[i].id));
+            },
+            builder: (BuildContext context, List<DnDRaw?> candidateData,
+                List<dynamic> rejectedData) {
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: TwaivSpacing.medium),
+                margin: EdgeInsets.only(
+                  right: i != 2 ? TwaivSpacing.medium : TwaivSpacing.zero,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: TwaivSpacing.smallMedium),
-                  alignment: Alignment.center,
-                  child: Badge(
-                    label: Text(
-                      '${baskets[i].fruits.length}',
+                decoration: BoxDecoration(
+                  color: baskets[i].fruits.isEmpty
+                      ? Colors.grey.shade200
+                      : Theme.of(context).primaryColor.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(TwaivBorderRadius.big),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      baskets[i].name,
                       style: Theme.of(context)
                           .textTheme
-                          .bodySmall!
-                          .copyWith(color: Colors.white),
+                          .titleSmall!
+                          .copyWith(fontSize: 12),
                     ),
-                    alignment: Alignment.topRight,
-                    offset: const Offset(10, -5),
-                    child: const Icon(CupertinoIcons.cart),
-                  ),
+                    Container(
+                      margin:
+                          const EdgeInsets.only(top: TwaivSpacing.smallMedium),
+                      alignment: Alignment.center,
+                      child: Badge(
+                        badgeContent: Text(
+                          '${baskets[i].fruits.length}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: Colors.white),
+                        ),
+                        position: BadgePosition.topEnd(end: -6),
+                        child: const Icon(CupertinoIcons.cart),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),

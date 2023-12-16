@@ -19,13 +19,14 @@ class LocalBasketApi extends BasketApi {
   final _controller = BehaviorSubject<List<Basket>>.seeded(const []);
 
   void _init() {
-    final traysJson = preferences.getString(_basketCollectionKey);
-    if (traysJson != null) {
-      final traysMap = List<Map<dynamic, dynamic>>.from(jsonDecode(traysJson));
-      final trays = Basket.fromJsonList(traysMap);
-      _controller.add(trays);
+    final basketsJson = preferences.getString(_basketCollectionKey);
+    if (basketsJson != null) {
+      final basketsMap =
+          List<Map<dynamic, dynamic>>.from(jsonDecode(basketsJson));
+      final baskets = Basket.fromJsonList(basketsMap);
+      _controller.add(baskets);
     } else {
-      // _setValue(_basketCollectionKey, jsonEncode(fakeBaskets));
+      _setValue(_basketCollectionKey, jsonEncode(fakeBaskets));
       _controller.add(Basket.fromJsonList(fakeBaskets));
     }
   }

@@ -35,7 +35,7 @@ final fakeTrays = [
     "name": "Second Tray",
     "fruits": [
       {
-        "id": "01HHPX19SWPGCGC05AF9804KWZ",
+        "id": "01HHPX19SWPGCGCs05AF9804KWZ",
         "name": "mango",
         "image": TwaivImages.mango,
         "background_color": Colors.orange.shade100.value,
