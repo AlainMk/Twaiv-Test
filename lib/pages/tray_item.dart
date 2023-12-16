@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twaiv_test/data/model/DnDRaw.dart';
 import 'package:twaiv_test/data/model/fruit.dart';
 import 'package:twaiv_test/data/model/tray.dart';
+import 'package:twaiv_test/pages/blocs/trays/trays_bloc.dart';
 import 'package:twaiv_test/theme/border_radius.dart';
 import 'package:twaiv_test/theme/colors.dart';
 import 'package:twaiv_test/theme/images.dart';
@@ -12,12 +16,23 @@ class TrayItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DragTarget<Fruit>(
+    return DragTarget<DnDRaw>(
       hitTestBehavior: HitTestBehavior.opaque,
-      onAccept: (fruit) {
-        debugPrint('received fruit ${fruit.name}');
+      onAccept: (raw) {
+        final fruit = raw.fruit;
+        final fromTray = raw.tray;
+        final exist = tray.fruits.where((f) => fruit.id == f.id);
+
+        if (exist.isNotEmpty) return;
+
+        context
+            .read<TraysBloc>()
+            .add(RemoveFruit(trayId: fromTray.name, fruitId: fruit.id));
+        context
+            .read<TraysBloc>()
+            .add(AddFruit(fruit: fruit, trayId: tray.name));
       },
-      builder: (BuildContext context, List<Object?> candidateData,
+      builder: (BuildContext context, List<DnDRaw?> candidateData,
           List<dynamic> rejectedData) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: TwaivSpacing.large),
@@ -68,11 +83,23 @@ class TrayItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: TwaivSpacing.largeL),
-              _contentFruitsList(),
+              tray.fruits.isEmpty
+                  ? _buildEmptyList(context)
+                  : _contentFruitsList(),
             ],
           ),
         );
       },
+    );
+  }
+
+  Center _buildEmptyList(BuildContext context) {
+    return Center(
+      child: Icon(
+        CupertinoIcons.nosign,
+        size: 40,
+        color: Theme.of(context).primaryColor,
+      ),
     );
   }
 
@@ -96,10 +123,7 @@ class TrayItem extends StatelessWidget {
 
   Widget _contentDraggableItem(BuildContext context, Fruit fruit) {
     return Draggable(
-      data: fruit,
-      onDragCompleted: () {
-        debugPrint("Fruit accepted");
-      },
+      data: DnDRaw(fruit: fruit, tray: tray),
       feedback: Container(
         height: 100,
         width: 100,

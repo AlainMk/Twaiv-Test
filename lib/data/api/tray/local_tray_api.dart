@@ -25,7 +25,7 @@ class LocalTrayApi extends TrayApi {
       final trays = Tray.fromJsonList(traysMap);
       _controller.add(trays);
     } else {
-      // _setValue(_trayCollectionKey, jsonEncode(fakeTrays));
+      _setValue(_trayCollectionKey, jsonEncode(fakeTrays));
       _controller.add(Tray.fromJsonList(fakeTrays));
     }
   }
@@ -38,11 +38,8 @@ class LocalTrayApi extends TrayApi {
     final trays = [..._controller.value];
     final trayIndex = trays.indexWhere((t) => t.name == trayId);
 
-    final fruitExist = trays[trayIndex].fruits.where((f) => f.id == fruit.id);
+    trays[trayIndex].fruits.add(fruit);
 
-    if (fruitExist.isEmpty) {
-      trays[trayIndex].fruits.add(fruit);
-    }
     _controller.add(trays);
     return _setValue(_trayCollectionKey, jsonEncode(trays));
   }
