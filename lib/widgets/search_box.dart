@@ -20,8 +20,8 @@ class SearchBox extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(TwaivBorderRadius.normal),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(TwaivSpacing.normal),
       ),
       child: IntrinsicHeight(
         child: Row(
@@ -30,7 +30,7 @@ class SearchBox extends StatelessWidget {
               CupertinoIcons.search,
               color: Colors.grey,
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: TwaivSpacing.small),
             Expanded(
               child: InkWell(
                 onTap: () {},

@@ -23,8 +23,10 @@ class HomeScreen extends StatelessWidget {
             child: Stack(
               children: [
                 ListView.separated(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: TwaivSpacing.large),
+                  padding: const EdgeInsets.only(
+                    top: TwaivSpacing.large,
+                    bottom: TwaivSpacing.largeXxxl * 4,
+                  ),
                   itemBuilder: (context, index) {
                     return TrayItem(tray: trays[index]);
                   },

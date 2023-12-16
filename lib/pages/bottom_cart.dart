@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twaiv_test/data/model/fruit.dart';
 import 'package:twaiv_test/theme/border_radius.dart';
 import 'package:twaiv_test/theme/spacing.dart';
 
@@ -17,7 +18,7 @@ class BottomCartsBar extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: TwaivSpacing.large,
-          vertical: TwaivSpacing.large,
+          vertical: TwaivSpacing.normal + TwaivSpacing.none,
         ),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -42,54 +43,62 @@ class BottomCartsBar extends StatelessWidget {
             const SizedBox(height: TwaivSpacing.normal),
             Row(
               children: [
-                for (var i = 0; i < 3; i++)
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: TwaivSpacing.medium),
-                      margin: EdgeInsets.only(
-                        right: i != 2 ? TwaivSpacing.medium : TwaivSpacing.zero,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.2),
-                        borderRadius:
-                            BorderRadius.circular(TwaivBorderRadius.normal),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Basket One',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(fontSize: 12),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                                top: TwaivSpacing.smallMedium),
-                            alignment: Alignment.center,
-                            child: Badge(
-                              label: Text(
-                                '2',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(color: Colors.white),
-                              ),
-                              alignment: Alignment.topRight,
-                              offset: const Offset(10, -5),
-                              child: const Icon(CupertinoIcons.cart),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                for (var i = 0; i < 3; i++) _buildItemCart(i, context),
               ],
             ),
-            const SizedBox(height: TwaivSpacing.medium),
+            const SizedBox(height: TwaivSpacing.large),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildItemCart(int i, BuildContext context) {
+    return Expanded(
+      child: DragTarget<Fruit>(
+        onAccept: (fruit) {
+          debugPrint('receive fruit ${fruit.name}');
+        },
+        builder: (BuildContext context, List<Fruit?> candidateData,
+            List<dynamic> rejectedData) {
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: TwaivSpacing.medium),
+            margin: EdgeInsets.only(
+              right: i != 2 ? TwaivSpacing.medium : TwaivSpacing.zero,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(TwaivBorderRadius.big),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Basket One',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontSize: 12),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: TwaivSpacing.smallMedium),
+                  alignment: Alignment.center,
+                  child: Badge(
+                    label: Text(
+                      '0',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: Colors.white),
+                    ),
+                    alignment: Alignment.topRight,
+                    offset: const Offset(10, -5),
+                    child: const Icon(CupertinoIcons.cart),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
