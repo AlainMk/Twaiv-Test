@@ -17,7 +17,7 @@ class TwaivTheme {
         backgroundColor: TwaivColors.white,
         elevation: 0,
       ),
-      textTheme: TexFonts.textTheme,
+      textTheme: TwaivFonts.textTheme,
       useMaterial3: false,
     );
   }

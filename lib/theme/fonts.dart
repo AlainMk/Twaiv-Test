@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
-class TexFonts {
-  const TexFonts._();
+class TwaivFonts {
+  const TwaivFonts._();
 
   static TextTheme textTheme = TextTheme(
     headlineLarge: GoogleFonts.poppins(
