@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:twaiv_test/data/model/DnDRaw.dart';
+import 'package:twaiv_test/data/model/dnd_raw.dart';
 import 'package:twaiv_test/data/model/fruit.dart';
 import 'package:twaiv_test/data/model/tray.dart';
 import 'package:twaiv_test/pages/blocs/trays/trays_bloc.dart';

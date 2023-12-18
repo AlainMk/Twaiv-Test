@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twaiv_test/pages/blocs/basket/baskets_bloc.dart';
 import 'package:twaiv_test/pages/blocs/trays/trays_bloc.dart';
-import 'package:twaiv_test/pages/bottom_basket.dart';
+import 'package:twaiv_test/pages/bottom_basket_bar.dart';
 import 'package:twaiv_test/pages/trays_success_list.dart';
 import 'package:twaiv_test/theme/spacing.dart';
 import 'package:twaiv_test/widgets/app_bar.dart';

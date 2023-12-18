@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:twaiv_test/data/model/DnDRaw.dart';
+import 'package:twaiv_test/data/model/dnd_raw.dart';
 import 'package:twaiv_test/pages/blocs/basket/baskets_bloc.dart';
 import 'package:twaiv_test/pages/blocs/trays/trays_bloc.dart';
 import 'package:twaiv_test/theme/border_radius.dart';
