@@ -21,9 +21,9 @@ class TrayItem extends StatelessWidget {
       onAccept: (raw) {
         final fruit = raw.fruit;
         final fromTray = raw.tray;
-        final exist = tray.fruits.where((f) => fruit.id == f.id);
 
-        if (exist.isNotEmpty) return;
+        final trayFruits = tray.fruits.where((f) => fruit.id == f.id);
+        if (trayFruits.isNotEmpty) return;
 
         context
             .read<TraysBloc>()

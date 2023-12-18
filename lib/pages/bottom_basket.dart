@@ -66,7 +66,7 @@ class BottomBasketsBar extends StatelessWidget {
     return Expanded(
       child: BlocBuilder<BasketsBloc, BasketsState>(
         builder: (context, state) {
-          final baskets = state.baskets;
+          final basket = state.baskets[i];
           return DragTarget<DnDRaw>(
             onAccept: (raw) {
               final fruit = raw.fruit;
@@ -77,7 +77,7 @@ class BottomBasketsBar extends StatelessWidget {
                   .add(RemoveFruit(trayId: fromTray.name, fruitId: fruit.id));
               context
                   .read<BasketsBloc>()
-                  .add(AddFruitToBasket(fruit: fruit, basketId: baskets[i].id));
+                  .add(AddFruitToBasket(fruit: fruit, basketId: basket.id));
             },
             builder: (BuildContext context, List<DnDRaw?> candidateData,
                 List<dynamic> rejectedData) {
@@ -88,7 +88,7 @@ class BottomBasketsBar extends StatelessWidget {
                   right: i != 2 ? TwaivSpacing.medium : TwaivSpacing.zero,
                 ),
                 decoration: BoxDecoration(
-                  color: baskets[i].fruits.isEmpty
+                  color: basket.fruits.isEmpty
                       ? Colors.grey.shade200
                       : Theme.of(context).primaryColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(TwaivBorderRadius.big),
@@ -96,7 +96,7 @@ class BottomBasketsBar extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      baskets[i].name,
+                      basket.name,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
@@ -108,7 +108,7 @@ class BottomBasketsBar extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Badge(
                         badgeContent: Text(
-                          '${baskets[i].fruits.length}',
+                          '${basket.fruits.length}',
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
